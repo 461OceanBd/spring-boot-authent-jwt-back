@@ -4,10 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 	
@@ -22,8 +24,8 @@ public class SecurityConfig {
     	
     	http.csrf((csrf) -> csrf.disable())
     	.authorizeHttpRequests((requests) -> requests
-    			.requestMatchers("/authenticated-page").authenticated()
-                .requestMatchers("/home", "sign-in", "sign-up").permitAll())
+    			.requestMatchers("/authenticated-page", "/welcome").authenticated()
+                .requestMatchers("/home", "/sign-in", "/sign-up").permitAll())
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
     	return http.build();
@@ -34,9 +36,15 @@ public class SecurityConfig {
      * 
      * @return
      */
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//    	
+//    }
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance(); // only for test.
+		return NoOpPasswordEncoder.getInstance();
     	
     }
 }
