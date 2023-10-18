@@ -24,9 +24,10 @@ public class SecurityConfig {
     	
     	http.csrf((csrf) -> csrf.disable())
     	.authorizeHttpRequests((requests) -> requests
-    			.requestMatchers("/authenticated-page", "/welcome").authenticated()
-                .requestMatchers("/home", "/sign-in", "/sign-up").permitAll())
-        .formLogin(Customizer.withDefaults())
+    			.requestMatchers("/api/authent/**", "/api-docs/**", "/swagger-ui/**").permitAll() // TODO : faire role pour acces swagger + Accès en dev uniquement
+    			.requestMatchers("api/**").authenticated()
+                )
+    	.formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
     	return http.build();
     }
@@ -43,7 +44,7 @@ public class SecurityConfig {
 //    }
     
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() { // TODO
 		return NoOpPasswordEncoder.getInstance();
     	
     }
