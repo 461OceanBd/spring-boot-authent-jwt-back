@@ -20,3 +20,8 @@ spring:
     change-log: classpath:db/master-changelog.xml
     enabled: true
     drop-first: false
+    
+springdoc:
+  api-docs:
+    path: "/api-docs"
+  swagger-ui: "/swagger-ui/index/html"
