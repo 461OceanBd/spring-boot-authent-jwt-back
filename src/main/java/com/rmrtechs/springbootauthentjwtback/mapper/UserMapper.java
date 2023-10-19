@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 import com.rmrtechs.springbootauthentjwtback.dto.UserDto;
 import com.rmrtechs.springbootauthentjwtback.model.User;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 	
