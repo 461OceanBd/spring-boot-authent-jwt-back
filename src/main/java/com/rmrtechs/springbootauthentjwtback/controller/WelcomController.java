@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WelcomController {
 	
 
-    @GetMapping("/welcome")
+    @GetMapping("/api/welcome")
     public String sayWelcome(){
         return "Welcome to Spring Application with Security";
     }
