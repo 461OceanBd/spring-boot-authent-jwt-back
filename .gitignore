@@ -32,5 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
+### Eclipse ###
+/.metadata/
+
 ### Project ###
 src/main/resources/application-secrets.yml
