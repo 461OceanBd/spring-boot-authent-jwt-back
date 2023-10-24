@@ -16,6 +16,7 @@ public interface UserMapper {
 	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 	
 	@Named("userToUserDto")
+	@Mapping(target = "password", ignore = true)
 	UserDto userToUserDto(User user);
 	
 	@IterableMapping(qualifiedByName = "userToUserDto")
@@ -26,9 +27,4 @@ public interface UserMapper {
 
 	@IterableMapping(qualifiedByName = "userDtoToUser")
 	List<User> userDtosToUsers(List<UserDto> userDtos);
-	
-	
-	@Mapping(target = "password", ignore = true)
-	@Mapping(target = "role", ignore = true)
-    UserDto userToUserDtoWithIdAndEmail(User user);
 }

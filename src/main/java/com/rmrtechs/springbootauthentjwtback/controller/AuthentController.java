@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("api/authent")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class AuthentController {
 	
 	@Autowired
@@ -38,7 +40,7 @@ public class AuthentController {
 			userDto.setPassword(hashPwd);
 			User convertedUser = userMapper.userDtoToUser(userDto);
 			User savedUser = userService.createUser(convertedUser);
-			return ResponseEntity.ok(userMapper.userToUserDtoWithIdAndEmail(savedUser));
+			return ResponseEntity.ok(userMapper.userToUserDto(savedUser));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
