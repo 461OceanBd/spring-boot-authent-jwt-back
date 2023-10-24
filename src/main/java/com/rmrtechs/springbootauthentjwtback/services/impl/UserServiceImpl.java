@@ -1,5 +1,6 @@
 package com.rmrtechs.springbootauthentjwtback.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
 		if (user.getRole() == null) {
 			user.setRole("user");
 		}
+		user.setCreationDate(LocalDateTime.now());
 		return userRepository.save(user);
 	}
 

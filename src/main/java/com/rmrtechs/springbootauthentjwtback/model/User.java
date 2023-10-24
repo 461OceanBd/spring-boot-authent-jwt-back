@@ -1,5 +1,7 @@
 package com.rmrtechs.springbootauthentjwtback.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,5 +36,8 @@ public class User {
 	
 	@Column(name = "role")
 	private String role;
+	
+	@Column(name = "creation_date")
+	private LocalDateTime creationDate;
 
 }

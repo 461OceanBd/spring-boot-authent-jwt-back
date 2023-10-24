@@ -21,4 +21,9 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="user_02" author="romain.mercier" created="2023-10-24">
+    	<addColumn tableName="users">
+    		<column name="creation_date" type="datetime"/>
+    	</addColumn>
+    </changeSet>
 </databaseChangeLog>
