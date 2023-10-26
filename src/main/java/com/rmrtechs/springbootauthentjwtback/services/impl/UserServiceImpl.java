@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rmrtechs.springbootauthentjwtback.exception.RegistrationAuthenticationException;
 import com.rmrtechs.springbootauthentjwtback.model.User;
 import com.rmrtechs.springbootauthentjwtback.repository.UserRepository;
 import com.rmrtechs.springbootauthentjwtback.services.UserService;
+import com.rmrtechs.springbootauthentjwtback.util.ErrorMessages;
 
 
 @Service
@@ -33,6 +35,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User createUser(User user) {
+		List<User> existingUsers = userRepository.findByEmail(user.getEmail());
+		if (!existingUsers.isEmpty()) {
+			throw new RegistrationAuthenticationException(ErrorMessages.MAIL_ALREADY_USED);
+		}
+		
+		
 		if (user.getRole() == null) {
 			user.setRole("user");
 		}
@@ -46,7 +54,7 @@ public class UserServiceImpl implements UserService {
             updatedUser.setId(id);
             return userRepository.save(updatedUser);
         } else {
-            throw new RuntimeException("Utilisateur non trouvé avec l'ID : " + id);
+            throw new RuntimeException(ErrorMessages.USER_NOT_FOUND + id);
         }
 	}
 

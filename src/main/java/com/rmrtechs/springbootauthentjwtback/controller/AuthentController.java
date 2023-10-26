@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rmrtechs.springbootauthentjwtback.dto.UserDto;
+import com.rmrtechs.springbootauthentjwtback.exception.RegistrationAuthenticationException;
 import com.rmrtechs.springbootauthentjwtback.mapper.UserMapper;
 import com.rmrtechs.springbootauthentjwtback.model.User;
 import com.rmrtechs.springbootauthentjwtback.services.UserService;
+import com.rmrtechs.springbootauthentjwtback.util.ErrorMessages;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,9 +43,12 @@ public class AuthentController {
 			User convertedUser = userMapper.userDtoToUser(userDto);
 			User savedUser = userService.createUser(convertedUser);
 			return ResponseEntity.ok(userMapper.userToUserDto(savedUser));
+		} catch (RegistrationAuthenticationException rae) {
+			log.error(rae.getMessage());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(rae.getMessage());		
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorMessages.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
